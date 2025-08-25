@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import ProtectedRoute from '@/components/ProtectedRoute'
 import { EventCard } from '@/components/dashboard/event-card'
 import { CreateEventDialog } from '@/components/dashboard/create-event-dialog'
 import { Button } from '@/components/ui/button'
@@ -43,7 +44,9 @@ export default function DashboardPage() {
   const loadUserAndEvents = async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession()
+      console.log('Dashboard session check:', session);
       if (!session) {
+        console.log('No session found, redirecting to login');
         window.location.href = '/login'
         return
       }
@@ -139,7 +142,8 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <ProtectedRoute>
+      <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -245,5 +249,6 @@ export default function DashboardPage() {
         onEventCreated={loadEvents}
       />
     </div>
+    </ProtectedRoute>
   )
 }

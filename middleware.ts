@@ -20,6 +20,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', req.url))
   }
 
+  // Log session information for debugging
+  console.log('Session:', session);
+
   return res
 }
 
