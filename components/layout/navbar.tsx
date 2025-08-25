@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import createClient from "@/lib/supabase/client";
 import { Button } from '@/components/ui/button'
 import { 
   DropdownMenu, 
@@ -23,7 +23,6 @@ export function Navbar({ user }: NavbarProps) {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const supabase = createClient()
-
   const handleLogout = async () => {
     setLoading(true)
     await supabase.auth.signOut()
